@@ -4,7 +4,7 @@ const fs = require('fs') // this engine requires the fs module like we did Satur
 const express = require('express')
 const mongoose = require('mongoose')
 const Fruit = require('./models/vegetable')
-const Vegetable = require('./model/vegetable')
+const Vegetable = require('./models/vegetable')
  
 
 // Create our express app
