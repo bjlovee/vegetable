@@ -6,6 +6,9 @@ class Index extends React.Component{
         return(
             <div>
                 <h1>Vegetable Index Page</h1>
+                <nav>
+                    <a href ="/vegetables/new">Create A New Vegetable</a>
+                </nav>
                 <ul>
                     {
                         vegetables.map((vegetable) => {
@@ -22,6 +25,9 @@ class Index extends React.Component{
                                         'It\'s not ready to eat'
                                     }
                                     <br/>
+                                    <form method="POST" action={`/vegetables/${vegetable._id}?_method=DELETE`}>
+                                        <input type="submit" value={`Delete ${color} ${name}`}/>
+                                    </form>
                                 </li>
                             )
                         })

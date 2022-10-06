@@ -3,7 +3,7 @@ require('dotenv').config()
 const fs = require('fs') // this engine requires the fs module like we did Saturday
 const express = require('express')
 const mongoose = require('mongoose')
-const Fruit = require('./models/vegetable')
+const methodOverride = require('method-override')
 const Vegetable = require('./models/vegetable')
  
 
@@ -27,6 +27,7 @@ mongoose.connection.once('open', () => {
 
 /*Start Middleware */
 
+app.use(methodOverride('_method'))
 
 /* END Middleware */
 
@@ -53,8 +54,29 @@ app.get('/vegetables/new', (req, res) => {
   res.render('vegetables/New')
 })
 // DELETE
+app.delete('/vegetabless/:id', (req, res) => {
+  Vegetable.findByIdAndDelete(req.params.id, (err, deletedVegetable) => {
+    if(err){
+      console.error(err)
+      res.status(400).send(err)
+    } else {
+      res.redirect('/vegetables')
+    }
+  })
+})
 
 // UPDATE
+app.put('/vegetabless/:id', (req, res) => {
+  req.body.readyToEat === 'on' || req.body.readyToEat === true ? req.body.readyToEat = true : req.body.readyToEat = false
+  Vegetable.findByIdAndUpdate(req.params.id, req.body, {new: true},(err, updatedVegetable) => {
+    if(err){
+      console.error(err)
+      res.status(400).send(err)
+    } else {
+      res.redirect(`/vegetables/${updatedVegetable._id}`)
+    }
+  })
+})
 
 // CREATE
 app.post('/vegetables', (req, res) =>{
@@ -65,22 +87,40 @@ app.post('/vegetables', (req, res) =>{
       console.error(err)
       res.status(400).send(err)
     } else {
-      // res.redirect('/vegetables')
-      res.send(createdVegetable)
+      res.redirect(`/vegetables/${createdVegetable._id}`)
+      // res.send(createdVegetable)
     }
   })
 })
 
 // EDIT (not applicable in an api)
+app.get('/vegetables/:id/edit', (req, res) => {
+  Vegetable.findById(req.params.id, (err, foundVegetables) => {
+    if(err){
+     console.error(err)
+     res.status(400).send(err)
+    } else {
+     res.render('vegetables/Edit', {
+       fruit: foundVegetables
+     })
+    }
+  })
+ })
 
 
 // SHOW ---- READ ---- GET
-// app.get('/vegetables/:i', (req, res) => {
-//  res.render('vegetables/Show', {
-//   vegetable: vegetables[req.params.i]
-//  })
-// })
-
+app.get('/vegetables/:id', (req, res) => {
+  Vegetable.findById(req.params.id, (err, foundVegetables) => {
+    if(err){
+     console.error(err)
+     res.status(400).send(err)
+    } else {
+     res.render('vegetables/Show', {
+       fruit: foundVegetables
+     })
+    }
+  })
+ })
 
 
 /* END ROUTES */
