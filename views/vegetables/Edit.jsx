@@ -2,12 +2,12 @@ const React = require('react')
 
 class Edit extends React.Component {
     render(){
-        const {name, _id, color, readyToEat} = this.props.fruit
+        const {name, _id, color, readyToEat} = this.props.vegetable
         return (
             <>
                 <h1>Edit This Vegetable</h1>
                 <nav>
-                    <a href="/fruits"> Go Back To Vegetable Home</a>
+                    <a href="/vegetables"> Go Back To Vegetable Home</a>
                 </nav>
                 <form method="POST" action={`/vegetables/${_id}?_method=PUT`}>
                     Name: <input type="text" name="name" defaultValue={name}></input><br/>

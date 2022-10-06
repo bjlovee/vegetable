@@ -6,7 +6,7 @@ class New extends React.Component {
             <>
             <h1>Create A New Vegetables</h1>
             <nav>
-                <a href="/vegetables">Go Back To Fruits Home Page</a>
+                <a href="/vegetables">Go Back To Vegetables Home Page</a>
             </nav>
             <form method='POST' action="/vegetables">
                 Name: <input type="text" name="name" placeholder='Name of Vegetable Here'></input><br/>

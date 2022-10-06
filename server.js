@@ -53,8 +53,9 @@ app.get('/vegetables', (req, res) => {
 app.get('/vegetables/new', (req, res) => {
   res.render('vegetables/New')
 })
+
 // DELETE
-app.delete('/vegetabless/:id', (req, res) => {
+app.delete('/vegetables/:id', (req, res) => {
   Vegetable.findByIdAndDelete(req.params.id, (err, deletedVegetable) => {
     if(err){
       console.error(err)
@@ -66,7 +67,7 @@ app.delete('/vegetabless/:id', (req, res) => {
 })
 
 // UPDATE
-app.put('/vegetabless/:id', (req, res) => {
+app.put('/vegetables/:id', (req, res) => {
   req.body.readyToEat === 'on' || req.body.readyToEat === true ? req.body.readyToEat = true : req.body.readyToEat = false
   Vegetable.findByIdAndUpdate(req.params.id, req.body, {new: true},(err, updatedVegetable) => {
     if(err){
@@ -101,7 +102,7 @@ app.get('/vegetables/:id/edit', (req, res) => {
      res.status(400).send(err)
     } else {
      res.render('vegetables/Edit', {
-       fruit: foundVegetables
+       vegetable: foundVegetables
      })
     }
   })
@@ -116,7 +117,7 @@ app.get('/vegetables/:id', (req, res) => {
      res.status(400).send(err)
     } else {
      res.render('vegetables/Show', {
-       fruit: foundVegetables
+       vegetable: foundVegetables
      })
     }
   })
@@ -127,6 +128,6 @@ app.get('/vegetables/:id', (req, res) => {
 
 
 // Tell the app to listen on a port
-app.listen(3000, () => {
+app.listen(3001, () => {
     console.log('Listening on Port 3000')
 })
